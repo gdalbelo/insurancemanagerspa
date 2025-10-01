@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { Card } from "../../components/Card/Card";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { createInsurance, getAllInsurancesByUser } from "../../services/insuranceServices";
+import { createInsurance, getAllInsurancesByUser, editInsurance } from "../../services/insuranceServices";
 import { HomeBody, HomeHeader } from "./HomeStyled";
 import Cookies from "js-cookie";
 
