@@ -19,6 +19,7 @@ export const ProfileHeader = styled.header`
     rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
   background-color: #fff;
   z-index: 0;
+  align: center;
 `;
 
 export const ProfileIconEdit = styled.i`
@@ -54,6 +55,9 @@ export const ProfileBackground = styled.img`
 
 export const ProfileUser = styled.div`
   padding: 2rem;
+  align: center;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const ProfileAvatar = styled.img`

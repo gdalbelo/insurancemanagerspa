@@ -26,7 +26,9 @@ export function Authentication() {
   async function inHanleSubmit(data) {
     try {
       const response = await signin(data);
-      Cookies.set("token", response.data, { expires: 1 });
+      console.log(response.data.user["_id"]);
+      Cookies.set("token", response.token, { expires: 1 });
+      Cookies.set("userid", response.data.user["_id"], { expires: 1 });
       navigate("/");
     } catch (error) {
       console.log(error);

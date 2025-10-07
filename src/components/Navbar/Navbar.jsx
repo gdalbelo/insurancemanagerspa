@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import logo from "../../images/insurance2.jpg";
+import logo from "../../images/LogoBN.jpg";
 import {
   ErrorSpan,
   ImageLogo,
@@ -33,12 +33,10 @@ export function Navbar() {
     navigate(`/search/${title}`);
     reset();
   }
-  console.log('Usuário logado: ', user);
   async function findUserLogged() {
     try {
       const response = await userLogged();
       setUser(response.data);
-      console.log('User: ', response.data);
     } catch (error) {
       console.log(error);
     }
@@ -46,14 +44,14 @@ export function Navbar() {
 
   function signout() {
     Cookies.remove("token");
+    Cookies.remove("userid");
     setUser(undefined);
-    navigate("/");
+    navigate("/auth");
   }
 
   useEffect(() => {
     if (Cookies.get("token")) findUserLogged();
   }, []);
-
   return (
     <>
       <Nav>
@@ -66,7 +64,7 @@ export function Navbar() {
             <input
               {...register("title")}
               type="text"
-              placeholder="Pesquise por um seguro"
+              placeholder="Pesquise por um título"
             />
           </InputSpace>
         </form>

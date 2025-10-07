@@ -20,12 +20,37 @@ export function signin(data) {
   return response;
 }
 
-export function userLogged() {
-  const response = axios.get(`${baseURL}/user/findById`, {
+export async function userLogged() {
+  //const data = await (await fetch(`${baseURL}/user/findById`)).json();
+  const response = axios.get(`${baseURL}/user/findById/` + Cookies.get('userid'), {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
     }
+  }).then();
+  return response;
+}
+
+export function getUserPersonalData(idLogado) {
+  const response = fetch('http://localhost:3001/user/userData/' + idLogado)
+    .then(response => {
+    // Check if the request was successful (status code 200-299)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json(); // Parse the response body as JSON
+  })
+  .then(data => {
+    return data; // Log the parsed JSON data
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error); // Handle any errors during the fetch operation
   });
+  return response;
+}
+
+export function updateUserData(name, username, email, id) {
+  let data = {name, username, email};
+  const response = axios.put(`${baseURL}/user/${id}`, data);
   return response;
 }
 

@@ -1,28 +1,17 @@
 import { Link } from "react-router-dom";
 import { TextLimit } from "../TextLimit/TextLimit";
 import { CardBody, CardContainer, CardFooter, CardHeader } from "./CardStyle";
-import { deleteInsurance, editInsurance } from "../../services/insuranceServices";
-
-async function fncExcluir(id, arrSeguros, setSeguros) {
-  let deleteResponse = deleteInsurance(id);
-  const insurances = arrSeguros.filter(function(insurance) {
-    return insurance.id !== id; // Retorna true para manter o elemento, false para remover
-  }); 
-  setSeguros(insurances);
-}
 
 export function Card({
   fncEditar,
+  fncDeletar,
   top,
   title,
-  seguros,
   numapolice,
   coberturas,
   premio,
-  setSeguros,
-  id,
+  seguroId
 }) {
-  let identy = id;
   return (
     <CardContainer>
       <CardBody>
@@ -43,8 +32,8 @@ export function Card({
           </CardFooter>
         </div>
 
-        <i onClick={() => fncEditar(numapolice, coberturas, premio, id)} style={{marginRight: '10px', marginTop: '10px'}}>Editar</i>
-        <i onClick={() => fncExcluir(id, seguros, setSeguros)} style={{marginRight: '10px', marginTop: '10px'}}>X</i>
+        <i onClick={() => fncEditar(premio, numapolice, coberturas, seguroId)} style={{marginRight: '10px', marginTop: '10px'}}>Editar</i>
+        <i onClick={() => fncDeletar(seguroId)} style={{marginRight: '10px', marginTop: '10px'}}>X</i>
       </CardBody>
     </CardContainer>
   );

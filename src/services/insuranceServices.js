@@ -18,27 +18,18 @@ export function searchInsurances(title) {
   return response;
 }
 
-export async function getAllInsurancesByUser() {
-  var response = await fetch(`${baseURL}/insurances`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${Cookies.get("token")}`,
-    },
-  }) .then(response => {
-        // Handle the response
-        console.log(response);
-        return response;
-      })
-      .catch(error => {
-        // Handle errors
-        console.log(error);
-      });
+export async function getAllInsurancesByUser(id) {
+  console.log(`${baseURL}/insurances/byIdInsurance/` + id);
+  var response = await fetch(`${baseURL}/insurances/byIdInsurance/` + id);
 
   return response;
 }
 
 export function createInsurance(body) {
+  console.log(body);
   const response = axios.post(`${baseURL}/insurances/create`, body, {
+    method: "POST",
+    body: JSON.stringify(body),
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
     },
@@ -56,8 +47,8 @@ export function getInsuranceById(id) {
   return response;
 }
 
-export function editInsurance(body, id) {
-  const response = axios.patch(`${baseURL}/insurances/update/${id}`, body, {
+export function editInsurance(numapolice, coberturas, premio, id) {
+  const response = axios.put(`${baseURL}/insurances/update/${id}`, {numapolice, coberturas, premio, id}, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
     },
@@ -65,7 +56,7 @@ export function editInsurance(body, id) {
   return response;
 }
 
-export function deleteInsurance (id) {
+export function deleteInsurance (id, idLogado) {
   const response = axios.delete(`${baseURL}/insurances/delete/${id}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,

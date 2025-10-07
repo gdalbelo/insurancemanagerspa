@@ -15,7 +15,6 @@ export const Nav = styled.nav`
 
 export const ImageLogo = styled.img`
   width: 8rem;
-  height: 3.5rem;
   object-fit: cover;
   cursor: pointer;
 `;

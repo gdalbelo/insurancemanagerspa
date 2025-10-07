@@ -12,64 +12,73 @@ import {
   ProfileUser,
 } from "./ProfileStyled";
 import { getAllInsurancesByUser } from "../../services/insuranceServices";
-import { Card } from "../../components/Card/Card";
-import { Link } from "react-router-dom";
+import { User } from "../../components/User/User";
+import { Link, useNavigate } from "react-router-dom";
+import { getUserPersonalData, updateUserData } from "../../services/userServices"; 
+import Cookies from "js-cookie";
 
 export function Profile() {
   const { user } = useContext(UserContext);
-  const [posts, setPosts] = useState([]);
 
-  async function findAllPostsByUser() {
-    const postsResponse = await getAllInsurancesByUser();
-    setPosts(postsResponse.data.postsByUser);
+  const [ name, setName ] = useState('');
+  const [ username, setUsername ] = useState('');
+  const [ email, setEmail ] = useState('');
+
+  const navigate = useNavigate();
+
+  async function fncChangeUser() {
+    let name = document.getElementById('name').value;
+    let username = document.getElementById('username').value;
+    let email = document.getElementById('email').value;
+
+    console.log(`Nome: ${name}
+                Username: ${username}
+                Email: ${email}`);
+
+    let changeUserData = await updateUserData(name, username, email, user["_id"]);
+
+    window.location.reload();
+
+    console.log(changeUserData);
   }
 
-  useEffect(() => {
-    findAllPostsByUser();
-  }, []);
+  function loadUserData() {
+    console.log(user);
+    setName(user.name);
+    setUsername(user.username)
+    setEmail(user.email);
+  }
 
+  const handleChange = (e) => {
+    switch (e.target.name) {
+      case 'name':
+        setName(e.target.value);
+        break;
+      case 'username':
+        setUsername(e.target.value);
+        break;
+      case 'email':
+        setEmail(e.target.value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    loadUserData()
+  }, []);
+  console.log(user);
   return (
     <ProfileContainer>
       <ProfileHeader>
-        <ProfileIconEdit>
-          <i className="bi bi-pencil-square"></i>
-        </ProfileIconEdit>
-
-        <ProfileBackground src={user.background} alt="" />
-
         <ProfileUser>
-          <ProfileAvatar src={user.avatar} alt="Foto do usuário" />
-          <h2>{user.name}</h2>
-          <h3>@{user.username}</h3>
+          <h2><label>Nome: </label><input type="text" value={name} name="name" id="name" onChange={handleChange} /></h2>
+          <h3><label>Username: </label><input type="text" value={username} name="username" id="username" onChange={handleChange} /></h3>
+          <h4><label>Email: </label><input type="text" value={email} name="email" id="email" onChange={handleChange} /></h4>
         </ProfileUser>
-
-        <ProfileActions>
-          <Link to="/manage-news/add/news">
-            <ProfileIconAdd>
-              <i className="bi bi-plus-circle"></i>
-            </ProfileIconAdd>
-          </Link>
-        </ProfileActions>
       </ProfileHeader>
-
-      <ProfilePosts>
-        {posts.length === 0 && <h3>Você ainda não criou nenhuma noticia...</h3>}
-
-        {posts.map((item) => {
-          return (
-            <Card
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              text={item.text}
-              banner={item.banner}
-              likes={item.likes}
-              comments={item.comments}
-              actions={true}
-            />
-          );
-        })}
-      </ProfilePosts>
+      <button onClick={fncChangeUser}>Alterar Dados</button>
     </ProfileContainer>
   );
 }
