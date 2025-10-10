@@ -7,45 +7,45 @@ import { Search } from "./pages/Search/Search";
 import { GlobalStyled } from "./GlobalStyled";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { Authentication } from "./pages/Authentication/Authentication";
+import { Signup } from "./pages/Signup/Singup";
 import { Profile } from "./pages/Profile/Profile";
 import UserProvider from "./Context/UserContext";
 import { ManageInsurance } from "./pages/ManageInsurance/ManageInsurance";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Navbar />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
+const router = createBrowserRouter([{
         path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/search/:title",
-        element: <Search />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
-        path: "/manage-news/:action/:id",
-        element: <ManageInsurance />,
-      },
-    ],
-  },
-  {
-    path: "/auth",
-    element: <Authentication />,
-  },
+        element: <Navbar/> ,
+        errorElement: <ErrorPage/> ,
+        children: [{
+                path: "/",
+                element: <Home/> ,
+            },
+            {
+                path: "/search/:title",
+                element: <Search/> ,
+            },
+            {
+                path: "/profile",
+                element: <Profile/> ,
+            },
+            {
+                path: "/manage-news/:action/:id",
+                element: <ManageInsurance/> ,
+            },
+        ],
+    },
+    {
+        path: "/auth",
+        element: <Authentication/> ,
+    },
+    {
+        path: "/signup",
+        element: <Signup/> ,
+    },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+ReactDOM.createRoot(document.getElementById("root")).render( <React.StrictMode >
     <GlobalStyled />
-    <UserProvider>
-      <RouterProvider router={router} />
-    </UserProvider>
-  </React.StrictMode>
+    <UserProvider >
+    <RouterProvider router = { router }/> </UserProvider > </React.StrictMode>
 );
