@@ -5,7 +5,7 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import { createInsurance, getAllInsurancesByUser, editInsurance, deleteInsurance } from "../../services/insuranceServices";
 import { getUserPersonalData } from "../../services/userServices"; 
 import { userLogged } from "../../services/userServices";
-import { HomeBody, HomeHeader } from "./HomeStyled";
+import { HomeBody, HomeHeader, Table } from "./HomeStyled";
 import Cookies from "js-cookie";
 
  export default function Home() {
@@ -75,12 +75,11 @@ import Cookies from "js-cookie";
 
   const fncEditar = (premio, numapolice, coberturas, obj) => {
     let idUser = (obj["_id"]);
-    
     document.getElementById('seguroID').value = idUser;
     document.getElementById('numapolice').value = numapolice;
     document.getElementById('coberturas').value = coberturas;
     document.getElementById('premio').value = premio;
-    console.log(premio, numapolice, coberturas, idUser);
+    console.log('idUser: ' + idUser);
   }
 
   useEffect(() => {
@@ -94,6 +93,7 @@ import Cookies from "js-cookie";
   }
   let seguroList = seguros[0];
   console.log(seguroList);
+  console.log(seguros);
   return (
     <>
        <section style={{width: '80%',
@@ -108,7 +108,23 @@ import Cookies from "js-cookie";
     </article>
     </section>
       <HomeBody>
+      <Table>
+        <tr>
+          <th>Número apólice</th>
+          <th>Seguro</th>
+          <th>Prêmio</th>
+          <th></th>
+        </tr>
         {seguros && seguros.map((item, index) => (
+          <tr key={index}>
+            <td>{item.numapolice}</td>
+            <td>{item.coberturas}</td>
+            <td>{item.premio}</td>
+            <td><i onClick={() => fncEditar(item.premio, item.numapolice, item.coberturas, item)} style={{marginRight: '10px', marginTop: '10px'}}>Editar</i>|<i onClick={() => fncDeletar(item)}>X</i></td>
+          </tr>
+        ))}
+      </Table>
+        {/* {seguros && seguros.map((item, index) => (
             <Card
               key={index}
               numapolice={item.numapolice}
@@ -120,7 +136,7 @@ import Cookies from "js-cookie";
               fncDeletar={fncDeletar}
               seguroId={item}
             />
-        ))}
+        ))} */}
       </HomeBody>
     </>
   );

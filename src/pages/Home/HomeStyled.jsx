@@ -13,3 +13,14 @@ export const HomeHeader = styled.section`
   display: flex;
   margin: 1rem auto;
 `;
+
+export const Table = styled.table`
+  margin: 0 auto;
+  tr:nth-child(odd) {
+    background-color: #f2f2f2; /* Cinza claro */
+  }
+
+  tr:nth-child(even) {
+    background-color: #ffffff; /* Branco */
+  }
+`;
