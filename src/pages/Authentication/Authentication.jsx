@@ -9,8 +9,10 @@ import { signupSchema } from "../../schemas/signupSchema";
 import { signin, signup } from "../../services/userServices";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function Authentication() {
+  const [perfil, setPerfil] = useState('');
   const {
     register: registerSignup,
     handleSubmit: handleSubmitSignup,
@@ -39,12 +41,18 @@ export function Authentication() {
 
   async function upHanleSubmit(data) {
     try {
+      data.perfil = perfil;
       const response = await signup(data);
       Cookies.set("token", response.data, { expires: 1 });
       navigate("/");
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const handleInputChange = (e) => {
+    setPerfil(e.target.value);
+    console.log(e.target.value);
   }
 
   return (
@@ -113,6 +121,7 @@ export function Authentication() {
           {errorsSignup.confirmPassword && (
             <ErrorSpan>{errorsSignup.confirmPassword.message}</ErrorSpan>
           )}
+          <h4><label>Perfil: </label><select id="perfil" value={perfil} name="perfil" onChange={handleInputChange}><option value="">Selecione</option><option value="subscritor">Subscritor</option><option value="corretor">Corretor</option><option value="adiministrador">Adiministrador</option></select></h4>
           <Button type="submit" text="Cadastrar" />
         </form>
       </Section>

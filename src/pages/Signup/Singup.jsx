@@ -37,7 +37,7 @@ export function Signup() {
 
     const navigate = useNavigate();
 
-    async function upHanleSubmit(data) {
+    async function upHandleSubmit(data) {
         try {
             const response = await signup(data);
             Cookies.set("token", response.data, { expires: 1 });
@@ -60,7 +60,7 @@ export function Signup() {
         </form> </Section>
 
         <Section type="signup">
-        <h2> Cadastrar </h2> <form onSubmit = { handleSubmitSignup(upHanleSubmit) } >
+        <h2> Cadastrar </h2> <form onSubmit = { handleSubmitSignup(upHandleSubmit) } >
         <Input type="text" placeholder="Nome" name="name" register = { registerSignup } /> {
             errorsSignup.name && ( <ErrorSpan> { errorsSignup.name.message } </ErrorSpan>
             )

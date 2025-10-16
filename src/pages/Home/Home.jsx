@@ -124,19 +124,6 @@ import Cookies from "js-cookie";
           </tr>
         ))}
       </Table>
-        {/* {seguros && seguros.map((item, index) => (
-            <Card
-              key={index}
-              numapolice={item.numapolice}
-              premio={item.premio}
-              coberturas={item.coberturas}
-              seguros={seguros}
-              setSeguros={setSeguros}
-              fncEditar={fncEditar}
-              fncDeletar={fncDeletar}
-              seguroId={item}
-            />
-        ))} */}
       </HomeBody>
     </>
   );
