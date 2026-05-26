@@ -1,7 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const baseURL = "https://insurancemanagerapi.vercel.app";
+const baseURL = "http://insurancemanagerapi.vercel.app";
+//const baseURL = "http://localhost:3001"
 
 export function signup(data) {
   delete data.confirmPassword;
@@ -31,7 +32,7 @@ export async function userLogged() {
 }
 
 export function getUserPersonalData(idLogado) {
-  const response = fetch('http://localhost:3001/user/userData/' + idLogado)
+  const response = fetch(`${baseURL}/user/userData/` + idLogado)
     .then(response => {
     // Check if the request was successful (status code 200-299)
     if (!response.ok) {
@@ -48,8 +49,8 @@ export function getUserPersonalData(idLogado) {
   return response;
 }
 
-export function updateUserData(name, username, email, perfil, id) {
-  let data = {name, username, email, perfil};
+export function updateUserData(name, username, email, id) {
+  let data = {name, username, email};
   const response = axios.put(`${baseURL}/user/${id}`, data);
   return response;
 }
