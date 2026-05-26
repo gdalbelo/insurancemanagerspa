@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const baseURL = "http://insurancemanagerapi.vercel.app";
+const baseURL = "https://insurancemanagerapi.vercel.app";
 //const baseURL = "http://localhost:3001"
 
 export function signup(data) {
