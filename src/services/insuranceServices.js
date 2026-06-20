@@ -1,7 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const baseURL = "https://insurancemanagerapi.vercel.app";
+//const baseURL = "https://insurancemanagerapi.vercel.app";
+const baseURL = "http://localhost:3001"
 
 export function getAllInsurances() {
   const response = fetch(`${baseURL}/insurances`);
