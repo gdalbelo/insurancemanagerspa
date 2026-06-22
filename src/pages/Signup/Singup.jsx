@@ -41,7 +41,7 @@ export function Signup() {
         try {
             const response = await signup(data);
             Cookies.set("token", response.data, { expires: 1 });
-            navigate("/");
+            navigate("/auth");
         } catch (error) {
             console.log(error);
         }

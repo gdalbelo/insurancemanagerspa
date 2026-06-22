@@ -78,6 +78,9 @@ export function Navbar() {
             <Link to="/profile"  style={{textDecoration: 'none'}}>
               <h2>{user.name}</h2>
             </Link>
+            <Link to="/insured"  style={{textDecoration: 'none'}}>
+              <h2>Segurados</h2>
+            </Link>
 
             <i className="bi bi-box-arrow-right" onClick={signout}></i>
           </UserLoggedSpace>

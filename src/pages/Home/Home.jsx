@@ -14,6 +14,7 @@ import Cookies from "js-cookie";
   const [seguros, setSeguros] = useState([]);
   const [numero, setNumero] = useState();
   const [user, setUser] = useState({});
+  const [edit, setEdit] = useState([]);
 
   async function findInsurances(idParam) {
     let idUser = idParam;
@@ -86,14 +87,20 @@ import Cookies from "js-cookie";
     findInsurances(Cookies.get('userid'));
     fncGetUser();
   }, []);
+
   console.log(seguros);
   console.log(`Cookies.get('userid'): ${Cookies.get('userid')}`)
+
   if(Cookies.get('userid') === ''){
     setSeguros(null);
   }
+
   let seguroList = seguros[0];
   console.log(seguroList);
   console.log(seguros);
+
+
+
   return (
     <>
        <section style={{width: '80%',
@@ -120,6 +127,7 @@ import Cookies from "js-cookie";
             <td>{item.numapolice}</td>
             <td>{item.coberturas}</td>
             <td>{item.premio}</td>
+            <td><input type="checkbox" id={'chk'+index} onClick={(edit) => {setEdit(!edit);console.log(document.getElementById('chk'+index).checked)}} /></td>
             <td><i onClick={() => fncEditar(item.premio, item.numapolice, item.coberturas, item)} style={{marginRight: '10px', marginTop: '10px'}}>Editar</i>|<i onClick={() => fncDeletar(item)}>X</i></td>
           </tr>
         ))}
