@@ -27,7 +27,7 @@ export async function getAllInsurancesByUser(id) {
 }
 
 export function createInsurance(body) {
-  console.log(body);
+  console.log('body => ', body);
   const response = axios.post(`${baseURL}/insurances/create`, body, {
     method: "POST",
     body: JSON.stringify(body),
@@ -48,8 +48,8 @@ export function getInsuranceById(id) {
   return response;
 }
 
-export function editInsurance(numapolice, coberturas, premio, id) {
-  const response = axios.put(`${baseURL}/insurances/update/${id}`, {numapolice, coberturas, premio, id}, {
+export function editInsurance(numapolice, coberturas, premio, segurado, id) {
+  const response = axios.put(`${baseURL}/insurances/update/${id}`, {numapolice, coberturas, premio, segurado, id}, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
     },
