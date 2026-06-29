@@ -48,6 +48,16 @@ export function getInsuranceById(id) {
   return response;
 }
 
+export function getCoberturas() {
+  const response = fetch(`${baseURL}/insurances/coberturas`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`
+    }
+  });
+  return response;
+}
+
 export function editInsurance(numapolice, coberturas, premio, segurado, id) {
   const response = axios.put(`${baseURL}/insurances/update/${id}`, {numapolice, coberturas, premio, segurado, id}, {
     headers: {

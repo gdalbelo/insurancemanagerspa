@@ -17,6 +17,8 @@ import Cookies from "js-cookie";
   const [user, setUser] = useState({});
   const [edit, setEdit] = useState([]);
   const [insured, setInsured] = useState([]);
+  const [cobertura, setCobertura] = useState([]);
+  let coberturasArr = [];
 
   async function findInsurances(idParam) {
     let idUser = idParam;
@@ -46,12 +48,14 @@ import Cookies from "js-cookie";
     setSeguros(insurance.insurance);
     findInsurances(Cookies.get('userid'));
     document.getElementById('numapolice').value = "";
-    document.getElementById('coberturas').value = "";
     document.getElementById('premio').value = "";
-    document.getElementById('seguroID').value = ''; 
+    document.getElementById('seguroID').value = "";
+    document.getElementById("coberturas").value = "";
+    document.getElementById("segurado").value = "";
   }
 
   async function fncDeletar(obj) {
+    if(!confirm("Tem certeza que deseja excluir o seguro?")) return;
     console.log(obj['_id']);
     let idSeguro = obj['_id'];
     let idUserLogado = Cookies.get('userid');
@@ -71,7 +75,7 @@ import Cookies from "js-cookie";
   }
 
   async function fncGetUser() {
-    let idLogado = Cookies.get('userid');
+    let idLogado = Cookies.get('userid'); 
     const user = await getUserPersonalData(idLogado);
     setUser(user);
     console.log(user);
@@ -92,10 +96,11 @@ import Cookies from "js-cookie";
     findInsurances(Cookies.get('userid'));
     fncGetUser();
     loadInsuredData();
+    loadCoberturaData();
   }, []);
 
-  console.log(seguros);
-  console.log(`Cookies.get('userid'): ${Cookies.get('userid')}`)
+  // console.log(seguros);
+  // console.log(`Cookies.get('userid'): ${Cookies.get('userid')}`)
 
   if(Cookies.get('userid') === ''){
     setSeguros(null);
@@ -112,10 +117,34 @@ import Cookies from "js-cookie";
     //console.log('segurados: ', segurado);
   }
 
+  function loadCoberturaData() {
+    let response = fetch('http://localhost:3001/insurances/coberturas').then(response=>{
+      console.log('response: ', response);
+      return response.json();
+    }).then(data => {
+        //console.log(data);
+        data.response.map(element => {
+          //console.log(element);
+          console.log(element);
+          coberturasArr.push(element);
+        })
+        setCobertura(data);
+      //}
+      return data.results;
+    });
+    //console.log(cobertura);
+    //console.log('segurados: ', segurado);
+  }
+
+
   let seguroList = seguros[0];
   console.log(seguroList);
   console.log(seguros);
-  console.log(insured.results);
+  console.log(insured);
+  console.log('Coberturas array: ', coberturasArr);
+  // cobertura.response.map(c => {
+  //   console.log(c);
+  // });
   return (
     <>
        <section style={{width: '80%',
@@ -124,15 +153,35 @@ import Cookies from "js-cookie";
     <input type="hidden" id="seguroID" />
     <article>
       Número apólice: <input type="number" id="numapolice" />&nbsp;
-      Coberturas: <select id="coberturas"><option value="">Selecione</option><option value="Pneus">Pneus</option><option value="Vidros">Vidros</option><option value="Ar">Ar Condicionado</option></select>&nbsp;
+      Coberturas: <select id="coberturas">
+          <option value="1">Cobertura Básica Contra Incêndio</option>
+          <option value="2">Danos Elétricos</option>
+          <option value="3">Roubo e Furto</option>
+          <option value="4">Responsabilidade Civil</option>
+          <option value="5">Danos Materiais a Terceiros</option>
+          <option value="6">Danos Corporais a Terceiros</option>
+          <option value="7">Acidentes Pessoais</option>
+          <option value="8">Morte Acidental</option>
+          <option value="9">Invalidez Permanente</option>
+          <option value="10">Despesas Médicas</option>
+          <option value="11">Assistência Funeral</option>
+          <option value="12">Quebra de Vidros</option>
+          <option value="13">Fenômenos da Natureza</option>
+          <option value="14">Alagamentos e Enchentes</option>
+          <option value="15">Equipamentos Eletrônicos</option>
+          <option value="16">Lucros Cessantes</option>
+          <option value="17">Carro Reserva</option>
+          <option value="18">Assistência 24 Horas</option>
+          <option value="19">Perda Total</option>
+          <option value="20">Cobertura Compreensiva (Completa)</option>
+          </select>&nbsp;
       Prêmio: <input type="number" id="premio" />&nbsp;
       Segurado: <select id="segurado">
-        <option>Selecione</option>
         {insured.results?.map((ins) => (
           <option value={ins.id}>{ins.fullname}</option>
         ))}
       </select>
-      <button onClick={() => fncIncluirSeguro()}>Salvar</button>
+      <button onClick={() => fncIncluirSeguro()}>Salvar</button>|<button onClick={() => fncIncluirSeguro()}>Novo</button>
     </article>
     </section>
       <HomeBody>
@@ -141,6 +190,7 @@ import Cookies from "js-cookie";
           <th>Número apólice</th>
           <th>Seguro</th>
           <th>Prêmio</th>
+          <th>Cobertura</th>
           <th>Segurado</th>
           {/* <th></th> */}
         </tr>
@@ -149,9 +199,10 @@ import Cookies from "js-cookie";
             <td>{item.numapolice}</td>
             <td>{item.coberturas}</td>
             <td>{item.premio}</td>
+            <td>{item.coberturas}</td>
             <td>{getInsuredNameById(item.segurado, insured.results)}</td>
             {/* <td><input type="checkbox" id={'chk'+index} onClick={(edit) => {setEdit(!edit);console.log(document.getElementById('chk'+index).checked)}} /></td> */}
-            <td><i onClick={() => fncEditar(item.premio, item.numapolice, item.coberturas, item.segurado, item)} style={{marginRight: '10px', marginTop: '10px'}}>Editar</i>|<i onClick={() => fncDeletar(item)}>X</i></td>
+            <td><i onClick={() => fncEditar(item.premio, item.numapolice, item.coberturas, item.segurado, item)} style={{marginRight: '10px', marginTop: '10px', cursor: 'pointer'}}>Editar</i>|<i onClick={() => fncDeletar(item)} style={{cursor: 'pointer'}}>X</i></td>
           </tr>
         ))}
       </Table>

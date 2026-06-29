@@ -81,6 +81,7 @@ export function Insured() {
     
     console.log(user["_id"])
 
+    console.log('segurado.userid: ', segurado.userid);
     let newInsured = await createInsured(segurado);
     console.log('newInsured: ', newInsured);
     //navigate('/');
@@ -89,6 +90,22 @@ export function Insured() {
     console.log(newInsured);
 
     loadInsuredData();
+
+    setName('');
+    setCpfCnpj('');
+    setDtNascimento('');
+    setEstadoCivil('');
+    setGenero('');
+    setProfissao('');
+    setLogradouro('');
+    setNumero('');
+    setComplemento('');
+    setBairro('');
+    setCep('');
+    setContato('');
+    setUsername('');
+    setEmail('');
+    setSegurado([]);
   }
 
   function loadUserData() {
@@ -102,6 +119,7 @@ export function Insured() {
     let insureds = fetch('http://localhost:3001/insured/').then(response=>{
       return response.json();
     }).then(data => {
+      console.log('segurados: ', data.results);
       setSegurado(data);
       return data.results;
     });
@@ -109,9 +127,26 @@ export function Insured() {
   }
 
   async function fncDeletar(id) {
+    if(!confirm("Tem certeza que deseja excluir o segurado?")) return;
     deleteInsured(id);
-    loadUserData()
+    console.log('loadInsuredData: ', loadInsuredData());
     loadInsuredData();
+
+    setName('');
+    setCpfCnpj('');
+    setDtNascimento('');
+    setEstadoCivil('');
+    setGenero('');
+    setProfissao('');
+    setLogradouro('');
+    setNumero('');
+    setComplemento('');
+    setBairro('');
+    setCep('');
+    setContato('');
+    setUsername('');
+    setEmail('');
+    setSegurado([]);
   }
   
   const fncEditar = (obj) => {
@@ -189,22 +224,41 @@ export function Insured() {
         break;
     }
   };
+  const formatter = new Intl.DateTimeFormat('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+  const formatDate = (dt) => {
+    const date = dt;
+
+    const dd = String(dt.getDate()).padStart(2, '0');
+    const mm = String(dt).padStart(2, '0'); // January is 0!
+    const yyyy = dt.getFullYear();
+
+    let formatDate = ('0' + dt.getDate()).slice(-2) + '/' + String(dt.getMonth() + 1).padStart(2, '0')+ '/' + dt.getFullYear()
+
+    const formattedDate = `${dd}/${mm}/${yyyy}`;
+    return formatDate; // Output: 28/06/2026
+  }
   useEffect(() => {
     loadUserData()
     loadInsuredData();
+    setName('');
   }, []);
   console.log(segurado);
   return (
       <InsuredContainer>
         <InsuredHeader>
         <p>
+          <input type="hidden" id="idSegurado" />
           <table align="left">
             <tr><td colSpan={2} align="center"><h1>Dados Pessoais</h1></td></tr>
-            <tr><td align="right"><h3>Nome completo:</h3></td><td><input type="text" name="fullname" id="fullname" onChange={handleChange} value={name} /></td></tr>
-            <tr><td align="right"><h3>CPF/CNPJ:</h3></td><td><input type="text" name="cpfcnpj" id="cpfcnpj" onChange={handleChange} value={cpfcnpj} /></td></tr>
-            <tr><td align="right"><h3>Data de Nascimento:</h3></td><td><input type="date" name="dtnascimento" id="dtnascimento" onChange={handleChange} value={dtnascimento} /></td></tr>
+            <tr><td align="right"><h3>Nome completo:</h3></td><td><input type="text" name="fullname" id="fullname" onChange={handleChange} /></td></tr>
+            <tr><td align="right"><h3>CPF/CNPJ:</h3></td><td><input type="text" name="cpfcnpj" id="cpfcnpj" onChange={handleChange} /></td></tr>
+            <tr><td align="right"><h3>Data de Nascimento:</h3></td><td><input type="date" name="dtnascimento" id="dtnascimento" onChange={handleChange} /></td></tr>
             <tr><td align="right"><h3>Estado Civil:</h3></td><td>
-              <select name="estadocivil" id="estadocivil" onChange={handleChange} value={estadocivil}>
+              <select name="estadocivil" id="estadocivil" onChange={handleChange}>
                 <option>Selecione</option>
                 <option>Solteiro</option>
                 <option>Casado</option>
@@ -212,15 +266,15 @@ export function Insured() {
                 <option>Viúvo</option>
               </select>
               </td></tr>
-            <tr><td align="right"><h3>Gênero:</h3></td><td><select name="genero" id="genero" onChange={handleChange} value={genero}><option>Selecione</option><option>Masculino</option><option>Feminino</option></select></td></tr>
-            <tr><td align="right"><h3>Profissão:</h3></td><td><input type="text" name="profissao" id="profissao" onChange={handleChange} value={profissao} /></td></tr>
+            <tr><td align="right"><h3>Gênero:</h3></td><td><select name="genero" id="genero" onChange={handleChange} ><option>Selecione</option><option>Masculino</option><option>Feminino</option></select></td></tr>
+            <tr><td align="right"><h3>Profissão:</h3></td><td><input type="text" name="profissao" id="profissao" onChange={handleChange} /></td></tr>
             <tr><td colSpan={2} align="center"><h1>Contato</h1></td></tr>
-            <tr><td align="right"><h3>Logradouro:</h3></td><td><input type="text" name="logradouro" id="logradouro" onChange={handleChange} value={logradouro} /></td></tr>
-            <tr><td align="right"><h3>Número:</h3></td><td><input type="number" name="numero" id="numero" onChange={handleChange} value={numero} /></td></tr>
-            <tr><td align="right"><h3>Complemento:</h3></td><td><input type="text" name="complemento" id="complemento" onChange={handleChange} value={complemento} /></td></tr>
-            <tr><td align="right"><h3>Bairro:</h3></td><td><input type="text" name="bairro" id="bairro" onChange={handleChange} value={bairro} /></td></tr>
-            <tr><td align="right"><h3>CEP:</h3></td><td><input type="text" name="cep" id="cep" onChange={handleChange} value={cep} /></td></tr>
-            <tr><td align="right"><h3>Contato:</h3></td><td><input type="text" name="contato" id="contato" onChange={handleChange} value={contato} /></td></tr>
+            <tr><td align="right"><h3>Logradouro:</h3></td><td><input type="text" name="logradouro" id="logradouro" onChange={handleChange} /></td></tr>
+            <tr><td align="right"><h3>Número:</h3></td><td><input type="number" name="numero" id="numero" onChange={handleChange} /></td></tr>
+            <tr><td align="right"><h3>Complemento:</h3></td><td><input type="text" name="complemento" id="complemento" onChange={handleChange} /></td></tr>
+            <tr><td align="right"><h3>Bairro:</h3></td><td><input type="text" name="bairro" id="bairro" onChange={handleChange} /></td></tr>
+            <tr><td align="right"><h3>CEP:</h3></td><td><input type="text" name="cep" id="cep" onChange={handleChange} /></td></tr>
+            <tr><td align="right"><h3>Contato:</h3></td><td><input type="text" name="contato" id="contato" onChange={handleChange} /></td></tr>
             <tr><td colSpan={2} align="center"><button onClick={fncCreateInsurer}>Cadastrar</button></td></tr>
           </table>
           <table align="center">
@@ -229,15 +283,14 @@ export function Insured() {
               <th>CPF/CNPJ</th>
               <th>Data de Nascimento</th>
               <th>Estado Civil</th>
-              <th></th>
             </tr>
             {(segurado.results?.map((item) => (
               <tr key={item.id}>
                 <td>{item.fullname}</td>
                 <td>{item.cpfcnpj}</td>
-                <td>{item.dtnascimento}</td>
+                <td>{formatDate(new Date(item.dtnascimento))}</td>
                 <td>{item.estadocivil}</td>
-                <td><i onClick={() => fncEditar(item)} style={{marginRight: '10px', marginTop: '10px'}}>Editar</i>|<i onClick={() => fncDeletar(item.id)}>X</i></td>
+                <td><i onClick={() => fncDeletar(item.id)} style={{cursor: "pointer"}}>X</i></td>
               </tr>
             )))}
           </table>
