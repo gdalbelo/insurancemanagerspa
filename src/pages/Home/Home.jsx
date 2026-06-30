@@ -78,7 +78,7 @@ import Cookies from "js-cookie";
     let idLogado = Cookies.get('userid'); 
     const user = await getUserPersonalData(idLogado);
     setUser(user);
-    console.log(user);
+    console.log('user', user);
     console.log('Usuário Logado: ' + idLogado);
   }
 
@@ -138,10 +138,10 @@ import Cookies from "js-cookie";
 
 
   let seguroList = seguros[0];
-  console.log(seguroList);
-  console.log(seguros);
-  console.log(insured);
-  console.log('Coberturas array: ', coberturasArr);
+  //console.log(seguroList);
+  //console.log(seguros);
+  //console.log(insured);
+  //onsole.log('Coberturas array: ', coberturasArr);
   // cobertura.response.map(c => {
   //   console.log(c);
   // });

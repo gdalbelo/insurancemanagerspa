@@ -30,12 +30,14 @@ export function Profile() {
     let name = document.getElementById('name').value;
     let username = document.getElementById('username').value;
     let email = document.getElementById('email').value;
+    let idUser = user["_id"];
 
     console.log(`Nome: ${name}
                 Username: ${username}
-                Email: ${email}`);
+                Email: ${email}
+                id: ${user["_id"]}`);
 
-    let changeUserData = await updateUserData(name, username, email, user["_id"]);
+    let changeUserData = await updateUserData(name, username, email, idUser);
 
     navigate('/');
     window.location.reload();
@@ -44,7 +46,8 @@ export function Profile() {
   }
 
   function loadUserData() {
-    console.log(user);
+    getUserPersonalData(user["_id"]);
+    console.log('Gabriel Dal Belo o id é esse: ', user["_id"]);
     setName(user.name);
     setUsername(user.username)
     setEmail(user.email);

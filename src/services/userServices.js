@@ -51,6 +51,7 @@ export function getUserPersonalData(idLogado) {
 
 export function updateUserData(name, username, email, id) {
   let data = {name, username, email};
+  console.log('id', id);
   const response = axios.put(`${baseURL}/user/${id}`, data);
   return response;
 }
