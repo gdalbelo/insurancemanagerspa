@@ -15,6 +15,7 @@ export const HomeHeader = styled.section`
 `;
 
 export const Table = styled.table`
+  white-space: nowrap;
   margin: 0 auto;
   tr:nth-child(odd) {
     background-color: #f2f2f2; /* Cinza claro */

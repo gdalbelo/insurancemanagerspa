@@ -11,7 +11,6 @@ import { Signup } from "./pages/Signup/Singup";
 import { Profile } from "./pages/Profile/Profile";
 import { Insured } from "./pages/Insured/Insured";
 import UserProvider from "./Context/UserContext";
-import { ManageInsurance } from "./pages/ManageInsurance/ManageInsurance";
 
 const router = createBrowserRouter([{
         path: "/",
@@ -32,11 +31,7 @@ const router = createBrowserRouter([{
             {
                 path: "/insured",
                 element: <Insured />
-            },
-            {
-                path: "/manage-news/:action/:id",
-                element: <ManageInsurance/> ,
-            },
+            }
         ],
     },
     {

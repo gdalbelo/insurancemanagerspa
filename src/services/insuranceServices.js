@@ -27,7 +27,7 @@ export async function getAllInsurancesByUser(id) {
 }
 
 export function createInsurance(body) {
-  console.log('body => ', body);
+  console.log('data createInsurance: ', body);
   const response = axios.post(`${baseURL}/insurances/create`, body, {
     method: "POST",
     body: JSON.stringify(body),

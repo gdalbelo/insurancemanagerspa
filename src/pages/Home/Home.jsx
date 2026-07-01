@@ -136,6 +136,12 @@ import Cookies from "js-cookie";
     //console.log('segurados: ', segurado);
   }
 
+  function fncCoberturaNome(coberturaId) {
+    let coberturaSelect = document.getElementById('coberturas');
+    let coberturaName = coberturaSelect.options[coberturaId].text;
+    return coberturaName;
+  }
+
 
   let seguroList = seguros[0];
   //console.log(seguroList);
@@ -152,7 +158,7 @@ import Cookies from "js-cookie";
   margin: '1rem auto'}}>
     <input type="hidden" id="seguroID" />
     <article>
-      Número apólice: <input type="number" id="numapolice" />&nbsp;
+      Número apólice: <input type="number" id="numapolice"  style={{width: '50px'}} />&nbsp;
       Coberturas: <select id="coberturas">
           <option value="1">Cobertura Básica Contra Incêndio</option>
           <option value="2">Danos Elétricos</option>
@@ -175,7 +181,7 @@ import Cookies from "js-cookie";
           <option value="19">Perda Total</option>
           <option value="20">Cobertura Compreensiva (Completa)</option>
           </select>&nbsp;
-      Prêmio: <input type="number" id="premio" />&nbsp;
+      Prêmio: <input type="number" id="premio" style={{width: '50px'}}/>&nbsp;
       Segurado: <select id="segurado">
         {insured.results?.map((ins) => (
           <option value={ins.id}>{ins.fullname}</option>
@@ -199,10 +205,33 @@ import Cookies from "js-cookie";
             <td>{item.numapolice}</td>
             <td>{item.coberturas}</td>
             <td>{item.premio}</td>
-            <td>{item.coberturas}</td>
+            <td>{fncCoberturaNome(item.coberturas)}</td>
             <td>{getInsuredNameById(item.segurado, insured.results)}</td>
             {/* <td><input type="checkbox" id={'chk'+index} onClick={(edit) => {setEdit(!edit);console.log(document.getElementById('chk'+index).checked)}} /></td> */}
-            <td><i onClick={() => fncEditar(item.premio, item.numapolice, item.coberturas, item.segurado, item)} style={{marginRight: '10px', marginTop: '10px', cursor: 'pointer'}}>Editar</i>|<i onClick={() => fncDeletar(item)} style={{cursor: 'pointer'}}>X</i></td>
+            <td><i onClick={() => 
+              fncEditar(item.premio, item.numapolice, item.coberturas, item.segurado, item)} 
+              style={{
+                  marginLeft: '20px',
+                  paddingRight: '2px',
+                  marginRight: '10px', 
+                  marginTop: '10px', 
+                  cursor: 'pointer',
+                  backgroundColor: '#B3490B',
+                  color: '#FFF',
+                  padding: '5px',
+                  borderRadius: '4px'
+                }} 
+              >Editar</i>|<i onClick={() => fncDeletar(item)}
+                 style={{
+                  marginLeft: '10px',
+                  marginRight: '5px', 
+                  marginTop: '10px', 
+                  cursor: 'pointer',
+                  backgroundColor: '#B3490B',
+                  color: '#FFF',
+                  padding: '5px',
+                  borderRadius: '2px'
+                }}>Excluir</i></td>
           </tr>
         ))}
       </Table>

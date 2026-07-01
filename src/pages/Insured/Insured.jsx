@@ -79,7 +79,6 @@ export function Insured() {
     segurado.cep = new  Number(cep);
     segurado.userid = user["_id"];
     
-    console.log(user["_id"])
 
     console.log('segurado.userid: ', segurado.userid);
     let newInsured = await createInsured(segurado);
@@ -109,7 +108,7 @@ export function Insured() {
   }
 
   function loadUserData() {
-    console.log(user);
+
     setName(user.name);
     setUsername(user.username)
     setEmail(user.email);
@@ -275,7 +274,17 @@ export function Insured() {
             <tr><td align="right"><h3>Bairro:</h3></td><td><input type="text" name="bairro" id="bairro" onChange={handleChange} /></td></tr>
             <tr><td align="right"><h3>CEP:</h3></td><td><input type="text" name="cep" id="cep" onChange={handleChange} /></td></tr>
             <tr><td align="right"><h3>Contato:</h3></td><td><input type="text" name="contato" id="contato" onChange={handleChange} /></td></tr>
-            <tr><td colSpan={2} align="center"><button onClick={fncCreateInsurer}>Cadastrar</button></td></tr>
+            <tr><td colSpan={2} align="center"><button onClick={fncCreateInsurer} style={{
+                  marginLeft: '20px',
+                  paddingRight: '2px',
+                  marginRight: '10px', 
+                  marginTop: '10px', 
+                  cursor: 'pointer',
+                  backgroundColor: '#B3490B',
+                  color: 'white',
+                  padding: '5px',
+                  borderRadius: '4px'
+                }} >Cadastrar</button></td></tr>
           </table>
           <table align="center">
             <tr>
@@ -290,7 +299,17 @@ export function Insured() {
                 <td>{item.cpfcnpj}</td>
                 <td>{formatDate(new Date(item.dtnascimento))}</td>
                 <td>{item.estadocivil}</td>
-                <td><i onClick={() => fncDeletar(item.id)} style={{cursor: "pointer"}}>X</i></td>
+                <td><i onClick={() => fncDeletar(item.id)} style={{
+                  marginLeft: '20px',
+                  paddingRight: '2px',
+                  marginRight: '10px', 
+                  marginTop: '10px', 
+                  cursor: 'pointer',
+                  backgroundColor: '#B3490B',
+                  color: 'white',
+                  padding: '5px',
+                  borderRadius: '4px'
+                }} >X</i></td>
               </tr>
             )))}
           </table>

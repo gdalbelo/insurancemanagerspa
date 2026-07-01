@@ -48,17 +48,16 @@ export async function userLogged() {
 export function getUserPersonalData(idLogado) {
   const response = fetch(`${baseURL}/user/userData/` + idLogado)
     .then(response => { 
-    // Check if the request was successful (status code 200-299)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return response.json(); // Parse the response body as JSON
+    return response.json();
   })
   .then(data => {
-    return data; // Log the parsed JSON data
+    return data;
   })
   .catch(error => {
-    console.error('Error fetching data:', error); // Handle any errors during the fetch operation
+    console.error('Error fetching data:', error);
   });
   return response;
 }

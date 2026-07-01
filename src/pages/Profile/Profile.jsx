@@ -86,7 +86,15 @@ export function Profile() {
           {/* <h4><label>Perfil: </label><select id="perfil" value={perfil} name="perfil" onChange={handleChange}><option value="">Selecione</option><option value="subscritor">Subscritor</option><option value="corretor">Corretor</option><option value="adiministrador">Adiministrador</option></select></h4> */}
         </ProfileUser>
       </ProfileHeader>
-      <button onClick={fncChangeUser}>Alterar Dados</button>
+      <button onClick={fncChangeUser} style={{marginLeft: '20px',
+                  paddingRight: '2px',
+                  marginRight: '10px', 
+                  marginTop: '10px', 
+                  cursor: 'pointer',
+                  backgroundColor: '#B3490B',
+                  color: '#FFF',
+                  padding: '5px',
+                  borderRadius: '4px'}}>Alterar Dados</button>
     </ProfileContainer>
   );
 }

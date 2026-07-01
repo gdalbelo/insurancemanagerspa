@@ -57,15 +57,6 @@ export function Navbar() {
       <Nav>
         <form onSubmit={handleSubmit(onSearch)}>
           <InputSpace>
-            <button type="submit">
-              <i className="bi bi-search"></i>
-            </button>
-
-            <input
-              {...register("title")}
-              type="text"
-              placeholder="Pesquise por um título"
-            />
           </InputSpace>
         </form>
 
