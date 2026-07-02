@@ -67,7 +67,7 @@ export function editInsurance(numapolice, coberturas, premio, segurado, id) {
   return response;
 }
 
-export function deleteInsurance (id, idLogado) {
+export function deleteInsurance (id) {
   const response = axios.delete(`${baseURL}/insurances/delete/${id}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
